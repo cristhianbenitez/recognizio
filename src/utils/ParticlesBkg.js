@@ -26,10 +26,6 @@ const ParticlesBkg = () => {
               opacity: 0.8,
               size: 10,
             },
-            repulse: {
-              distance: 100,
-              duration: 0.4,
-            },
           },
         },
         particles: {
