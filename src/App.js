@@ -1,24 +1,26 @@
 import React from 'react';
-import Navigation from './components/Navigation/Navigation';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import ParticlesBkg from './utils/ParticlesBkg';
-import useClarifai from './hooks/useClarifai';
-function App() {
-  const { imageUrl, onInputChange, onButtonSubmit, box } = useClarifai();
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Signin from './pages/Signin';
+import Signup from './pages/Signup';
 
+function App() {
   return (
-    <div className='App'>
-      <ParticlesBkg />
-      <Navigation />
-      <Rank />
-      <ImageLinkForm
-        onInputChange={onInputChange}
-        onButtonSubmit={onButtonSubmit}
-      />
-      <FaceRecognition imageURL={imageUrl} boxes={box} />
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route path='/signup'>
+            <Signup />
+          </Route>
+          <Route path='/signin'>
+            <Signin />
+          </Route>
+          <Route path='/'>
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -8,11 +8,7 @@ const FaceRecognition = ({ imageURL, boxes }) => {
     <div className='center ma'>
       <div className='absolute mt2'>
         <img id='image' src={imageURL} alt='' width='500' height='auto' />
-<<<<<<< HEAD
         {boxes
-=======
-        {imageURL
->>>>>>> ea0874db4038ac3bdc6326b59e3d08e355933cd2
           ? faceBoxes.map((faceBox) => {
               const { topRow, leftCol, bottomRow, rightCol } = faceBox;
               return (
