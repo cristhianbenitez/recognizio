@@ -13,7 +13,7 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
             className='f4 pa2 w-70 center '
             type='text'
             onChange={onInputChange}
-            placeHolder='Insert Image URL'
+            placeholder='Insert Image URL'
           />
           <button
             className='w-30 grow f4 link ph3 dib white bg-light-purple'

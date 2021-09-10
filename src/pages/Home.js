@@ -11,7 +11,7 @@ const Homepage = () => {
   return (
     <div>
       <ParticlesBkg />
-      <Navigation />
+      <Navigation isSigning={false} />
       <Rank />
       <ImageLinkForm
         onInputChange={onInputChange}

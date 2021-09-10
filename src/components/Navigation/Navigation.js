@@ -1,13 +1,27 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
-const Navigation = () => {
+const Navigation = ({ isSigning }) => {
   return (
     <nav className='flex justify-between '>
       <Logo />
-      <Link to='/signin'>
-        <p className='f3 link dim black underline pa3 pointer'>Sign Out</p>
-      </Link>
+
+      {isSigning === true ? (
+        <div className='flex ma4'>
+          <Link to='/signin'>
+            <p className='f3 link dim white underline pa3 pointer'>Sign In</p>
+          </Link>
+          <Link to='/signup'>
+            <p className='f3 link dim white underline pa3 pointer'>Sign Up</p>
+          </Link>
+        </div>
+      ) : (
+        <Link to='/signin'>
+          <p className='f3 link dim white underline pa3 pointer ma4'>
+            Sign Out
+          </p>
+        </Link>
+      )}
     </nav>
   );
 };
