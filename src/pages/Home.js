@@ -6,7 +6,7 @@ import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import ParticlesBkg from '../utils/ParticlesBkg';
 import useClarifai from '../hooks/useClarifai';
 
-const Homepage = () => {
+const Home = () => {
   const { imageUrl, onInputChange, onButtonSubmit, box } = useClarifai();
   return (
     <div>
@@ -22,4 +22,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Home;

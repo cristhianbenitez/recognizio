@@ -1,6 +1,6 @@
 import React from 'react';
 import ParticlesBkg from '../utils/ParticlesBkg';
-import Form from '../components/Form/Form';
+import { Form } from '../components/Form/Form';
 import Navigation from '../components/Navigation/Navigation';
 
 const Signin = () => {
@@ -8,12 +8,12 @@ const Signin = () => {
     <>
       <ParticlesBkg />
       <Navigation isSigning={true} />
-      <Form
-        signValue='Sign In'
-        isSigningIn={true}
-        isSigningUp={false}
-        linkedTo='/home'
-      />
+      <Form>
+        <Form.Title>Sign In</Form.Title>
+        <Form.Input label="Email" />
+        <Form.Input label="Password" />
+        <Form.Button>Sign In</Form.Button>
+      </Form>
     </>
   );
 };

@@ -1,73 +1,71 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import * as React from 'react';
+import { TextField, Button } from '@material-ui/core';
+// const [email, setEmail] = useState('');
+// const [password, setPassword] = useState('');
+// const [userName, setUserName] = useState('');
+// const [isSigned, setIsSigned] = useState(false);
 
-const Form = ({ signValue, isSigningIn, isSigningUp, linkedTo }) => {
+// const onEmailChange = ({ target }) => {
+//   setEmail(target.value);
+// };
+// const onPasswordChange = ({ target }) => {
+//   setPassword(target.value);
+// };
+// const onUserNameChange = ({ target }) => {
+//   setUserName(target.value);
+// };
+// const handleSignin = () => {
+//   axios
+//     .post('http://localhost:3000/signin', {
+//       email: email,
+//       password: password
+//     })
+//     .then(({ data }) => {
+//       if (data === 'success') {
+//         setIsSigned(true);
+//       }
+//     });
+// };
+// const handleSignUp = () => {
+//   axios
+//     .post('http://localhost:3000/signup', {
+//       name: userName,
+//       email: email,
+//       password: password
+//     })
+//     .then(({ data }) => {
+//       if (data.name && data.email && data.password) {
+//         setIsSigned(true);
+//       }
+//     });
+// };
+
+export const Form = ({ children, ...restProps }) => {
   return (
-    <article className='br3 ba  b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center'>
-      <main className='pa4 ma3 black-80'>
-        <div className='measure tc'>
-          <fieldset
-            id={isSigningIn === true ? 'sign_in' : 'sign_up'}
-            className='ba b--transparent ph0 mh0'
-          >
-            <legend className='f1 fw6 ph0 mh0'>
-              {isSigningIn === true ? 'Sign In' : 'Sign Up'}
-            </legend>
-            <div className='mt3'>
-              <label className='db fw6 lh-copy f6' htmlFor='email-address'>
-                Email
-              </label>
-              <input
-                className='pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-                type='email'
-                name='email-address'
-                id='email-address'
-              />
-            </div>
-            {isSigningUp === true ? (
-              <div className='mv3'>
-                <label className='db fw6 lh-copy f6' htmlFor='password'>
-                  Name
-                </label>
-                <input
-                  className='b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-                  type='text'
-                  name='user-name'
-                  id='user-name'
-                />
-              </div>
-            ) : null}
-            <div className='mv3'>
-              <label className='db fw6 lh-copy f6' htmlFor='password'>
-                Password
-              </label>
-              <input
-                className='b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-                type='password'
-                name='password'
-                id='password'
-              />
-            </div>
-          </fieldset>
-          <Link to={linkedTo}>
-            <input
-              className='b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'
-              type='submit'
-              value={signValue}
-            />
-          </Link>
-
-          {isSigningIn ? (
-            <div className='lh-copy mt3'>
-              <a href='/signup' className='f6 link dim black db'>
-                Sign up
-              </a>
-            </div>
-          ) : null}
-        </div>
-      </main>
+    <article className="br3 ba  b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+      <form className="tc ma4" {...restProps}>
+        {children}
+      </form>
     </article>
   );
 };
 
-export default Form;
+Form.Title = ({ children, ...restProps }) => {
+  return <h2 className="f3 f2-m f2-l">{children}</h2>;
+};
+Form.Input = ({ label, ...restProps }) => {
+  return (
+    <div className="ma3">
+      <TextField
+        className=""
+        id="outlined-basic"
+        label={label}
+        variant="outlined"
+        {...restProps}
+      />
+    </div>
+  );
+};
+Form.Button = ({ children, ...restProps }) => {
+  return <Button variant="contained">{children}</Button>;
+};

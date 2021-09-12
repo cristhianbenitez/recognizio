@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import Clarifai from 'clarifai';
 const useClarifai = () => {
   const [input, setInput] = useState('');
@@ -6,7 +7,7 @@ const useClarifai = () => {
   const [box, setBox] = useState('');
 
   const faceDetector = new Clarifai.App({
-    apiKey: '44d26e4f7eae45b4b173903dfb9e8ca8',
+    apiKey: '44d26e4f7eae45b4b173903dfb9e8ca8'
   });
 
   const calculateFaceLocation = (data) => {
@@ -23,7 +24,7 @@ const useClarifai = () => {
         topRow: top_row * height,
         leftCol: left_col * width,
         bottomRow: height - bottom_row * height,
-        rightCol: width - right_col * width,
+        rightCol: width - right_col * width
       };
     });
     return boxLocations;
@@ -39,7 +40,12 @@ const useClarifai = () => {
 
   const onButtonSubmit = (e) => {
     faceDetector.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', input).then(
-      (res) => displayFaceBox(calculateFaceLocation(res)),
+      (res) => {
+        if (res) {
+          axios.put('http://localhost:3001/image', {});
+        }
+        displayFaceBox(calculateFaceLocation(res));
+      },
       (err) => console.log('error')
     );
     setImageUrl(input);
