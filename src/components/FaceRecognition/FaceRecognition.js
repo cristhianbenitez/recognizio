@@ -5,21 +5,21 @@ const FaceRecognition = ({ imageURL, boxes }) => {
   const faceBoxes = boxes;
 
   return (
-    <div className='center ma'>
-      <div className='absolute mt2'>
-        <img id='image' src={imageURL} alt='' width='500' height='auto' />
+    <div className="center ma">
+      <div className="absolute mt2">
+        <img id="image" src={imageURL} alt="" width="500" height="auto" />
         {boxes
           ? faceBoxes.map((faceBox) => {
               const { topRow, leftCol, bottomRow, rightCol } = faceBox;
               return (
                 <div
                   key={faceBox.index}
-                  className='bounding-box'
+                  className="bounding-box"
                   style={{
                     top: topRow,
                     right: rightCol,
                     bottom: bottomRow,
-                    left: leftCol,
+                    left: leftCol
                   }}
                 ></div>
               );

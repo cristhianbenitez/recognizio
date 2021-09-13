@@ -51,7 +51,11 @@ export const Form = ({ children, ...restProps }) => {
 };
 
 Form.Title = ({ children, ...restProps }) => {
-  return <h2 className="f3 f2-m f2-l">{children}</h2>;
+  return (
+    <h2 className="f3 f2-m f2-l" {...restProps}>
+      {children}
+    </h2>
+  );
 };
 Form.Input = ({ label, ...restProps }) => {
   return (
