@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
+import { Link } from 'react-router-dom';
 
 export const Navbar = ({ children, ...restProps }) => {
   return (
@@ -12,8 +13,14 @@ export const Navbar = ({ children, ...restProps }) => {
 Navbar.Logo = ({ ...restProps }) => {
   return <Logo {...restProps} />;
 };
-Navbar.Item = ({ children, ...restProps }) => {
-  return <p className="f3 link dim white underline pa3 pointer">{children}</p>;
+Navbar.Item = ({ children, link, ...restProps }) => {
+  return (
+    <Link to={link} className="no-underline">
+      <p className="f3 pa3 pointer dim link fw6 db white link dim">
+        {children}
+      </p>
+    </Link>
+  );
 };
 Navbar.Container = ({ children, ...restProps }) => {
   return (
@@ -22,20 +29,3 @@ Navbar.Container = ({ children, ...restProps }) => {
     </div>
   );
 };
-
-// {
-//   isSigning === true ? (
-//     <div className="flex ma4">
-//       <Link to="/signin">
-//         <p className="f3 link dim white underline pa3 pointer">Sign In</p>
-//       </Link>
-//       <Link to="/signup">
-//         <p className="f3 link dim white underline pa3 pointer">Sign Up</p>
-//       </Link>
-//     </div>
-//   ) : (
-//     <Link to="/signin">
-//       <p className="f3 link dim white underline pa3 pointer ma4">Sign Out</p>
-//     </Link>
-//   );
-// }

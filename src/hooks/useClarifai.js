@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
-import Clarifai from 'clarifai';
+
 const useClarifai = () => {
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState('');
-
-  const faceDetector = new Clarifai.App({
-    apiKey: '44d26e4f7eae45b4b173903dfb9e8ca8'
-  });
+  const [id, setId] = useState('');
 
   const calculateFaceLocation = (data) => {
     const image = document.getElementById('image');
@@ -39,19 +35,41 @@ const useClarifai = () => {
   };
 
   const onButtonSubmit = (e) => {
-    faceDetector.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', input).then(
-      (res) => {
-        if (res) {
-          axios.put('http://localhost:3001/image', {});
-        }
-        displayFaceBox(calculateFaceLocation(res));
-      },
-      (err) => console.log('error')
-    );
+    fetch('https://intense-harbor-26195.herokuapp.com/imageurl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: input
+      })
+    })
+      .then((res) => res.json())
+      .then(
+        (res) => {
+          fetch('https://intense-harbor-26195.herokuapp.com/image', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: id
+            })
+          })
+            .then((res) => res.json())
+            .then((count) => {
+              console.log(count);
+            })
+            .catch(console.log);
+          displayFaceBox(calculateFaceLocation(res));
+        },
+        (err) => console.log('error')
+      );
     setImageUrl(input);
   };
 
-  return { imageUrl, onInputChange, onButtonSubmit, box };
+  return {
+    imageUrl,
+    onInputChange,
+    onButtonSubmit,
+    box
+  };
 };
 
 export default useClarifai;

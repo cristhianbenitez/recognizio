@@ -7,14 +7,15 @@ import ParticlesBkg from '../utils/ParticlesBkg';
 import useClarifai from '../hooks/useClarifai';
 
 const Home = () => {
-  const { imageUrl, onInputChange, onButtonSubmit, box } = useClarifai();
+  const { imageUrl, onInputChange, onButtonSubmit, box, setUser } =
+    useClarifai();
   return (
     <>
       <ParticlesBkg />
       <Navbar>
         <Navbar.Logo />
         <Navbar.Container>
-          <Navbar.Item>Sign Out</Navbar.Item>
+          <Navbar.Item link="/signin">Sign Out</Navbar.Item>
         </Navbar.Container>
       </Navbar>
       <Rank />

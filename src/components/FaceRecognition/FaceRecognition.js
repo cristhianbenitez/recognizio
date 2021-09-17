@@ -13,7 +13,7 @@ const FaceRecognition = ({ imageURL, boxes }) => {
               const { topRow, leftCol, bottomRow, rightCol } = faceBox;
               return (
                 <div
-                  key={faceBox.index}
+                  key={Math.random()}
                   className="bounding-box"
                   style={{
                     top: topRow,
