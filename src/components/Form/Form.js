@@ -1,44 +1,5 @@
 import * as React from 'react';
 import { TextField, Button } from '@material-ui/core';
-// const [email, setEmail] = useState('');
-// const [password, setPassword] = useState('');
-// const [userName, setUserName] = useState('');
-// const [isSigned, setIsSigned] = useState(false);
-
-// const onEmailChange = ({ target }) => {
-//   setEmail(target.value);
-// };
-// const onPasswordChange = ({ target }) => {
-//   setPassword(target.value);
-// };
-// const onUserNameChange = ({ target }) => {
-//   setUserName(target.value);
-// };
-// const handleSignin = () => {
-//   axios
-//     .post('http://localhost:3000/signin', {
-//       email: email,
-//       password: password
-//     })
-//     .then(({ data }) => {
-//       if (data === 'success') {
-//         setIsSigned(true);
-//       }
-//     });
-// };
-// const handleSignUp = () => {
-//   axios
-//     .post('http://localhost:3000/signup', {
-//       name: userName,
-//       email: email,
-//       password: password
-//     })
-//     .then(({ data }) => {
-//       if (data.name && data.email && data.password) {
-//         setIsSigned(true);
-//       }
-//     });
-// };
 
 export const Form = ({ children, ...restProps }) => {
   return (

@@ -6,13 +6,13 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 
 function App() {
-  useEffect(() => {
-    axios
-      .get('https://intense-harbor-26195.herokuapp.com/')
-      .then(({ data }) => {
-        console.log(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('https://intense-harbor-26195.herokuapp.com/')
+  //     .then(({ data }) => {
+  //       console.log(data);
+  //     });
+  // }, []);
 
   return (
     <Router>

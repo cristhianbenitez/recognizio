@@ -7,8 +7,7 @@ import ParticlesBkg from '../utils/ParticlesBkg';
 import useClarifai from '../hooks/useClarifai';
 
 const Home = () => {
-  const { imageUrl, onInputChange, onButtonSubmit, box, setUser } =
-    useClarifai();
+  const { imageUrl, onInputChange, onButtonSubmit, box } = useClarifai();
   return (
     <>
       <ParticlesBkg />
