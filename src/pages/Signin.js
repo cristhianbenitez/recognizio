@@ -1,40 +1,31 @@
-import React from 'react';
-import ParticlesBkg from '../utils/ParticlesBkg';
-import { Form } from '../components/Form/Form';
-import { Navbar } from '../components/Navbar/Navbar';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { actions } from '../state/index';
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Form } from '../components/Form/Form';
+import { Navbar } from '../components/Navbar/Navbar';
+import ParticlesBkg from '../utils/ParticlesBkg';
 
 const Signin = () => {
-  const dispatch = useDispatch();
-  const { updateSignInInfo, updateUser } = bindActionCreators(
-    actions,
-    dispatch
-  );
-  const { email, password } = useSelector((state) => state.signinReducer);
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: ''
+  });
 
   const handleSignIn = () => {
     axios
       .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        email: email,
-        password: password
+        email: inputs.email,
+        password: inputs.password
       })
       .then(({ data }) => {
         if (data.id) {
-          updateUser({
-            id: data.id,
-            name: data.name,
-            email: data.email,
-            entries: data.entries,
-            joined: data.joined
-          });
+          console.log(data);
+          localStorage.setItem('user', JSON.stringify(data));
+          return data;
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
-
   return (
     <>
       <ParticlesBkg />
@@ -49,14 +40,14 @@ const Signin = () => {
         <Form.Title>Sign In</Form.Title>
         <Form.Input
           label="Email"
-          onChange={(e) => updateSignInInfo({ email: e.target.value })}
+          onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
         />
         <Form.Input
           label="Password"
           type="password"
-          onChange={(e) => updateSignInInfo({ password: e.target.value })}
+          onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
         />
-        <Link to="/signin" className="no-underline">
+        <Link to="/home" className="no-underline">
           <Form.Button onClick={handleSignIn}>Sign In</Form.Button>
         </Link>
         <Link to="/signup" className="no-underline">
