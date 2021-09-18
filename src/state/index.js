@@ -1,1 +1,1 @@
-export * as actions from './actions/updates';
+export * as actions from './actions/';
