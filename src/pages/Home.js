@@ -2,12 +2,21 @@ import React from 'react';
 import { Navbar } from '../components/Navbar/Navbar';
 import { ImageForm } from '../components/ImageForm/ImageForm';
 import Rank from '../components/Rank/Rank';
-import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
+import { FaceRecognition } from '../components/FaceRecognition/FaceRecognition';
 import ParticlesBkg from '../utils/ParticlesBkg';
-import useClarifai from '../hooks/useClarifai';
+import { actions } from '../state/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { requestFaceLocations } from '../state/actions/requestFaceLocations';
 
 const Home = () => {
-  const { imageUrl, onInputChange, onButtonSubmit, box } = useClarifai();
+  const dispatch = useDispatch();
+  const facesLocations = bindActionCreators(requestFaceLocations, dispatch);
+  const { updateInput } = bindActionCreators(actions, dispatch);
+  const { input, imageUrl, box } = useSelector(
+    ({ faceReducer }) => faceReducer
+  );
+
   return (
     <>
       <ParticlesBkg />
@@ -24,10 +33,14 @@ const Home = () => {
         </ImageForm.Text>
       </ImageForm>
       <ImageForm.Container>
-        <ImageForm.Input onChange={onInputChange} />
-        <ImageForm.Button onClick={onButtonSubmit}>Detect</ImageForm.Button>
+        <ImageForm.Input
+          onChange={(e) => {
+            updateInput(e.target.value);
+          }}
+        />
+        <ImageForm.Button>Detect</ImageForm.Button>
       </ImageForm.Container>
-      <FaceRecognition imageURL={imageUrl} boxes={box} />
+      {/* <FaceRecognition imageURL={imageUrl} boxes={box} /> */}
     </>
   );
 };

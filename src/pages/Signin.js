@@ -10,31 +10,30 @@ import { bindActionCreators } from 'redux';
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const { updateEmail, updateName, updateInput } = bindActionCreators(
+  const { updateSignInInfo, updateUser } = bindActionCreators(
     actions,
     dispatch
   );
-  const { signInEmail, signInPassword } = useSelector(
-    ({ signinReducer }) => signinReducer
-  );
-  console.log(signInEmail);
+  const { email, password } = useSelector((state) => state.signinReducer);
 
-  const handleEmail = ({ target }) => {
-    updateEmail(target.value);
+  const handleSignIn = () => {
+    axios
+      .post('https://intense-harbor-26195.herokuapp.com/signin', {
+        email: email,
+        password: password
+      })
+      .then(({ data }) => {
+        if (data.id) {
+          updateUser({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            entries: data.entries,
+            joined: data.joined
+          });
+        }
+      });
   };
-  const handlePassword = ({ target }) => {};
-
-  // const handleSignIn = () => {
-  //   axios
-  //     .post('https://intense-harbor-26195.herokuapp.com/signin', {
-  //       email: email,
-  //       password: password
-  //     })
-  //     .then(({ data }) => {
-  //       if (data === 'success') {
-  //       }
-  //     });
-  // };
 
   return (
     <>
@@ -50,15 +49,15 @@ const Signin = () => {
         <Form.Title>Sign In</Form.Title>
         <Form.Input
           label="Email"
-          onChange={(e) => updateEmail(e.target.value)}
+          onChange={(e) => updateSignInInfo({ email: e.target.value })}
         />
         <Form.Input
           label="Password"
           type="password"
-          // onChange={handlePassword}
+          onChange={(e) => updateSignInInfo({ password: e.target.value })}
         />
-        <Link to="/home" className="no-underline">
-          {/* <Form.Button onClick={handleSignIn}>Sign In</Form.Button> */}
+        <Link to="/signin" className="no-underline">
+          <Form.Button onClick={handleSignIn}>Sign In</Form.Button>
         </Link>
         <Link to="/signup" className="no-underline">
           <Form.SmallText>Sign Up</Form.SmallText>

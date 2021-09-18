@@ -1,11 +1,12 @@
 const initialState = {
   email: '',
-  password: ''
+  password: '',
+  name: ''
 };
 
-export const signinReducer = (state = initialState, action = {}) => {
+export const signupReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'UPDATE_SIGNIN_INFO':
+    case 'UPDATE_SIGNUP_INFO':
       return { ...state, ...action.payload };
     default:
       return state;

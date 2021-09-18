@@ -4,31 +4,34 @@ import { Form } from '../components/Form/Form';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { actions } from '../state/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const { updateSignUpInfo, updateUser } = bindActionCreators(
+    actions,
+    dispatch
+  );
+  const { email, name, password } = useSelector((state) => state.signupReducer);
 
-  const handleName = ({ target }) => {
-    setName(target.value);
-  };
-  const handleEmail = ({ target }) => {
-    setEmail(target.value);
-  };
-  const handlePassword = ({ target }) => {
-    setPassword(target.value);
-  };
-
-  const handleSignin = () => {
+  const handleSignUp = () => {
     axios
-      .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        name: name,
-        email: email,
+      .post('https://intense-harbor-26195.herokuapp.com/signup', {
+        name: email,
+        email: name,
         password: password
       })
       .then(({ data }) => {
-        if (data === 'success') {
+        if (data.id) {
+          updateUser({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            entries: data.entries,
+            joined: data.joined
+          });
         }
       });
   };
@@ -44,19 +47,22 @@ const Signup = () => {
       </Navbar>
       <Form>
         <Form.Title>Sign Up</Form.Title>
-        <Form.Input label="Name" onChange={handleName} />
+        <Form.Input
+          label="Name"
+          onChange={(e) => updateSignUpInfo({ name: e.target.value })}
+        />
         <Form.Input
           label="Email"
           id="outlined-adornment-password"
-          onChange={handleEmail}
+          onChange={(e) => updateSignUpInfo({ email: e.target.value })}
         />
         <Form.Input
           label="Password"
           type="password"
-          onChange={handlePassword}
+          onChange={(e) => updateSignUpInfo({ password: e.target.value })}
         />
-        <Link to="/signin" className="no-underline">
-          <Form.Button>Sign Up</Form.Button>
+        <Link to="/signun" className="no-underline">
+          <Form.Button onClick={handleSignUp}>Sign Up</Form.Button>
         </Link>
       </Form>
     </>
