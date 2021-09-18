@@ -1,13 +1,9 @@
 import { combineReducers } from 'redux';
-import { userReducer } from './userReducer';
-import { signinReducer } from './signinReducer';
-import { signupReducer } from './signupReducer';
-import { faceReducer } from './faceReducer';
+import { userReducer } from './user.reducer';
+import { faceReducer } from './face.reducer';
 
 const reducers = combineReducers({
   userReducer,
-  signinReducer,
-  signupReducer,
   faceReducer
 });
 
