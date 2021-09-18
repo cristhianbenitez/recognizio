@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
-import ParticlesBkg from '../utils/ParticlesBkg';
-import { Form } from '../components/Form/Form';
-import { Navbar } from '../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Form } from '../components/Form/Form';
+import { Navbar } from '../components/Navbar/Navbar';
+import ParticlesBkg from '../utils/ParticlesBkg';
+
 const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  console.log(email);
-  console.log(password);
-  const handleEmail = ({ target }) => {
-    setEmail(target.value);
-  };
-  const handlePassword = ({ target }) => {
-    setPassword(target.value);
-  };
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: ''
+  });
 
   const handleSignIn = () => {
     axios
       .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        email: email,
-        password: password
+        email: inputs.email,
+        password: inputs.password
       })
       .then(({ data }) => {
-        if (data === 'success') {
+        if (data.id) {
+          console.log(data);
+          localStorage.setItem('user', JSON.stringify(data));
+          return data;
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
-
   return (
     <>
       <ParticlesBkg />
@@ -40,11 +38,14 @@ const Signin = () => {
       </Navbar>
       <Form>
         <Form.Title>Sign In</Form.Title>
-        <Form.Input label="Email" onChange={handleEmail} />
+        <Form.Input
+          label="Email"
+          onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+        />
         <Form.Input
           label="Password"
           type="password"
-          onChange={handlePassword}
+          onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
         />
         <Link to="/home" className="no-underline">
           <Form.Button onClick={handleSignIn}>Sign In</Form.Button>

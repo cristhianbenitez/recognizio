@@ -6,29 +6,23 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
 
-  const handleName = ({ target }) => {
-    setName(target.value);
-  };
-  const handleEmail = ({ target }) => {
-    setEmail(target.value);
-  };
-  const handlePassword = ({ target }) => {
-    setPassword(target.value);
-  };
-
-  const handleSignin = () => {
+  const handleSignUp = () => {
     axios
-      .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        name: name,
-        email: email,
-        password: password
+      .post('https://intense-harbor-26195.herokuapp.com/signup', {
+        name: inputs.email,
+        email: inputs.name,
+        password: inputs.password
       })
       .then(({ data }) => {
-        if (data === 'success') {
+        if (data.id) {
+          localStorage.setItem('user', JSON.stringify(data));
+          return data;
         }
       });
   };
@@ -44,19 +38,22 @@ const Signup = () => {
       </Navbar>
       <Form>
         <Form.Title>Sign Up</Form.Title>
-        <Form.Input label="Name" onChange={handleName} />
+        <Form.Input
+          label="Name"
+          onChange={(e) => setInputs({ name: e.target.value })}
+        />
         <Form.Input
           label="Email"
           id="outlined-adornment-password"
-          onChange={handleEmail}
+          onChange={(e) => setInputs({ email: e.target.value })}
         />
         <Form.Input
           label="Password"
           type="password"
-          onChange={handlePassword}
+          onChange={(e) => setInputs({ password: e.target.value })}
         />
-        <Link to="/signin" className="no-underline">
-          <Form.Button>Sign Up</Form.Button>
+        <Link to="/signun" className="no-underline">
+          <Form.Button onClick={handleSignUp}>Sign Up</Form.Button>
         </Link>
       </Form>
     </>

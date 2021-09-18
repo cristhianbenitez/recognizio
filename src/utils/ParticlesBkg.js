@@ -3,7 +3,7 @@ import Particles from 'react-tsparticles';
 const ParticlesBkg = () => {
   return (
     <Particles
-      id='tsparticles'
+      id="tsparticles"
       options={{
         fpsLimit: 60,
         interactivity: {
@@ -11,36 +11,36 @@ const ParticlesBkg = () => {
           events: {
             onClick: {
               enable: true,
-              mode: 'push',
+              mode: 'push'
             },
             onHover: {
               enable: true,
-              mode: 'repulse',
+              mode: 'repulse'
             },
-            resize: true,
+            resize: true
           },
           modes: {
             bubble: {
               distance: 400,
               duration: 2,
               opacity: 0.8,
-              size: 10,
-            },
-          },
+              size: 10
+            }
+          }
         },
         particles: {
           color: {
-            value: '#ffffff',
+            value: '#ffffff'
           },
           links: {
             color: '#ffffff',
             distance: 150,
             enable: true,
             opacity: 0.5,
-            width: 1,
+            width: 1
           },
           collisions: {
-            enable: true,
+            enable: true
           },
           move: {
             direction: 'none',
@@ -48,27 +48,26 @@ const ParticlesBkg = () => {
             outMode: 'bounce',
             random: false,
             speed: 1.5,
-            straight: false,
+            straight: false
           },
           number: {
             density: {
               enable: true,
-              value_area: 800,
+              value_area: 800
             },
-            value: 80,
+            value: 80
           },
           opacity: {
-            value: 0.5,
+            value: 0.5
           },
           shape: {
-            type: 'circle',
+            type: 'circle'
           },
           size: {
-            random: true,
-            value: 5,
-          },
+            random: true
+          }
         },
-        detectRetina: true,
+        detectRetina: true
       }}
     />
   );

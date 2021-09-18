@@ -15,7 +15,7 @@ Navbar.Logo = ({ ...restProps }) => {
 };
 Navbar.Item = ({ children, link, ...restProps }) => {
   return (
-    <Link to={link} className="no-underline">
+    <Link to={link} className="no-underline" {...restProps}>
       <p className="f3 pa3 pointer dim link fw6 db white link dim">
         {children}
       </p>
