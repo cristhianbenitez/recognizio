@@ -1,6 +1,7 @@
 import React from 'react';
 import './ImageForm.css';
 import { Button } from '@material-ui/core';
+
 export const ImageForm = ({ children, ...restProps }) => {
   return <div {...restProps}>{children}</div>;
 };

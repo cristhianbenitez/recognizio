@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Navbar } from '../components/Navbar/Navbar';
-import { ImageForm } from '../components/ImageForm/ImageForm';
-import Entries from '../components/Entries/Entries';
-import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
+import { Navbar, ImageForm, FaceRecognition, Entries } from '../components';
+
 import ParticlesBkg from '../utils/ParticlesBkg';
-import { actions } from '../state/';
+import { actions } from '../store';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { calculateFaceLocation } from '../helpers/';
 
-const Home = () => {
-  const dispatch = useDispatch();
-  const { updateInput, updateUser, updateBox, updateImageUrl, updateEntries } =
-    bindActionCreators(actions, dispatch);
-  const { input, imageUrl, box } = useSelector((state) => state.faceReducer);
-  const { name, entries, id } = useSelector((state) => state.userReducer);
+export const Home = () => {
+  const [name, setName] = useState('');
+  const [entries, setEntries] = useState('');
+  const [id, setId] = useState(1);
+  const [input, setInput] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [box, setBox] = useState('');
 
   const faceBoxes = (boxLocation) => {
-    updateBox(boxLocation);
+    setBox(boxLocation);
   };
 
   const handleSubmit = (e) => {
@@ -34,13 +33,13 @@ const Home = () => {
               id: id
             })
             .then(({ entries }) => {
-              updateEntries({ entries });
+              setEntries({ entries });
             });
         }
         faceBoxes(calculateFaceLocation(arrOfFaces));
       });
 
-    updateImageUrl(input);
+    setImageUrl(input);
   };
   return (
     <>
@@ -48,9 +47,7 @@ const Home = () => {
       <Navbar>
         <Navbar.Logo />
         <Navbar.Container>
-          <Navbar.Item link="/signin" onClick={() => updateUser({})}>
-            Sign Out
-          </Navbar.Item>
+          <Navbar.Item link="/signin">Sign Out</Navbar.Item>
         </Navbar.Container>
       </Navbar>
       <Entries name={name} entries={entries} />
@@ -62,7 +59,7 @@ const Home = () => {
       <ImageForm.Container>
         <ImageForm.Input
           onChange={(e) => {
-            updateInput(e.target.value);
+            setInput(e.target.value);
           }}
         />
         <ImageForm.Button onClick={handleSubmit}>Detect</ImageForm.Button>
@@ -71,5 +68,3 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;

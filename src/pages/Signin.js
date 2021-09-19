@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Form } from '../components/Form/Form';
-import { Navbar } from '../components/Navbar/Navbar';
+
+import { Form, Navbar } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
 
-const Signin = () => {
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: ''
-  });
+export const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(true);
+
+  const handleError = () => {
+    !submitted && !email && !password ? setError(true) : setError(false);
+  };
 
   const handleSignIn = () => {
     axios
       .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        email: inputs.email,
-        password: inputs.password
+        email: email,
+        password: password
       })
       .then(({ data }) => {
         if (data.id) {
@@ -38,18 +42,23 @@ const Signin = () => {
       </Navbar>
       <Form>
         <Form.Title>Sign In</Form.Title>
+        {error ? (
+          <Form.Alert onClose={handleError}>Wrong Credentials</Form.Alert>
+        ) : null}
         <Form.Input
           label="Email"
-          onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Form.Input
           label="Password"
           type="password"
-          onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Link to="/home" className="no-underline">
-          <Form.Button onClick={handleSignIn}>Sign In</Form.Button>
-        </Link>
+        <Form.Button onClick={handleSignIn}>Sign In</Form.Button>
         <Link to="/signup" className="no-underline">
           <Form.SmallText>Sign Up</Form.SmallText>
         </Link>
@@ -57,5 +66,3 @@ const Signin = () => {
     </>
   );
 };
-
-export default Signin;

@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import ParticlesBkg from '../utils/ParticlesBkg';
-import { Form } from '../components/Form/Form';
-import { Navbar } from '../components/Navbar/Navbar';
-import { Link } from 'react-router-dom';
+import { Form, Navbar } from '../components';
 import axios from 'axios';
 
-const Signup = () => {
-  const [inputs, setInputs] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
+export const SignUp = () => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(true);
 
+  const handleError = () => {
+    !submitted && !email && !password ? setError(true) : setError(false);
+  };
   const handleSignUp = () => {
     axios
       .post('https://intense-harbor-26195.herokuapp.com/signup', {
-        name: inputs.email,
-        email: inputs.name,
-        password: inputs.password
+        name: email,
+        email: name,
+        password: password
       })
       .then(({ data }) => {
         if (data.id) {
@@ -26,6 +27,7 @@ const Signup = () => {
         }
       });
   };
+
   return (
     <>
       <ParticlesBkg />
@@ -38,26 +40,22 @@ const Signup = () => {
       </Navbar>
       <Form>
         <Form.Title>Sign Up</Form.Title>
-        <Form.Input
-          label="Name"
-          onChange={(e) => setInputs({ name: e.target.value })}
-        />
+        {error ? (
+          <Form.Alert onClose={handleError}>Wrong Credentials</Form.Alert>
+        ) : null}
+        <Form.Input label="Name" onChange={(e) => setName(e.target.value)} />
         <Form.Input
           label="Email"
           id="outlined-adornment-password"
-          onChange={(e) => setInputs({ email: e.target.value })}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Form.Input
           label="Password"
           type="password"
-          onChange={(e) => setInputs({ password: e.target.value })}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Link to="/signun" className="no-underline">
-          <Form.Button onClick={handleSignUp}>Sign Up</Form.Button>
-        </Link>
+        <Form.Button onClick={handleSignUp}>Sign Up</Form.Button>
       </Form>
     </>
   );
 };
-
-export default Signup;

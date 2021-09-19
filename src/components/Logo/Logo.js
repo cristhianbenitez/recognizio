@@ -3,7 +3,7 @@ import Tilt from 'react-tilt';
 import './logo.css';
 import Brain from './brain.png';
 
-const Logo = () => {
+export const Logo = () => {
   return (
     <div className="logo ma3 mt3">
       <Tilt
@@ -26,5 +26,3 @@ const Logo = () => {
     </div>
   );
 };
-
-export default Logo;

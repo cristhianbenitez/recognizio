@@ -1,29 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
-import { history } from './helpers/history';
-import { actions } from './state';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-function App() {
-  const dispatch = useDispatch();
-  const { clearAlerts } = bindActionCreators(actions, dispatch);
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { Home, SignIn, SignUp } from './pages';
+
+import { history } from './helpers/history';
+
+function App() {
   history.listen((location, action) => {
     //clear alert on location change
-    clearAlerts();
+    // clearAlerts();
   });
 
   return (
     <Router>
       <Switch>
         <Route path="/signup">
-          <Signup />
+          <SignUp />
         </Route>
         <Route path="/signin">
-          <Signin />
+          <SignIn />
         </Route>
         <Route path="/">
           <Home />

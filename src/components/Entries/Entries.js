@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Entries = ({ name, entries }) => {
+export const Entries = ({ name, entries }) => {
   return (
     <div className="tc ma5">
       <p className="white f3">
@@ -10,5 +10,3 @@ const Entries = ({ name, entries }) => {
     </div>
   );
 };
-
-export default Entries;

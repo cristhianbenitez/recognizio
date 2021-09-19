@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import { Alert } from '@mui/material';
 
 export const Form = ({ children, ...restProps }) => {
   return (
     <article className="br3 ba  b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
-      <form className="tc ma4 flex flex-column" {...restProps}>
+      <form className="tc ma4 flex flex-column" name="form" {...restProps}>
         {children}
       </form>
     </article>
@@ -18,20 +19,33 @@ Form.Title = ({ children, ...restProps }) => {
     </h2>
   );
 };
-Form.Input = ({ label, ...restProps }) => {
+Form.Input = ({ label, value, ...restProps }) => {
   return (
     <div className="ma3">
-      <TextField label={label} variant="outlined" {...restProps} />
+      {!value ? (
+        <TextField label={label} variant="outlined" {...restProps} />
+      ) : (
+        <TextField error id="filled-error-helper-text" />
+      )}
     </div>
   );
 };
 Form.Button = ({ children, ...restProps }) => {
   return (
-    <Button variant="contained" type="submit" {...restProps}>
-      {children}
-    </Button>
+    <div>
+      <button className="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib black pointer">
+        {children}
+      </button>
+    </div>
   );
 };
-Form.SmallText = ({ children, ...restProps }) => {
+Form.SmallText = ({ children, error, ...restProps }) => {
   return <p className="no-underline white mt3 ">{children}</p>;
+};
+Form.Alert = ({ children, ...restProps }) => {
+  return (
+    <Alert variant="outlined" severity="error" {...restProps}>
+      {children}
+    </Alert>
+  );
 };
