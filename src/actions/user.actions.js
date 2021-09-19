@@ -1,24 +1,23 @@
 import { userConstants } from '../constants';
 import { userService } from '../services';
-import { alertActions } from '.';
+import { alertActions } from './alert.actions';
 import { history } from '../helpers';
 
 export const userActions = {
   signin,
-  logout,
-  signup,
-  getAll
+  signout,
+  signup
   // delete: _delete
 };
 
-function signin(username, password) {
+function signin(email, password) {
   return (dispatch) => {
-    dispatch(request({ username }));
+    dispatch(request({ email }));
 
-    userService.signin(username, password).then(
+    userService.signin(email, password).then(
       (user) => {
-        dispatch(success(user));
-        history.push('/home');
+        dispatch(success(user.email));
+        history.push('/');
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -38,9 +37,9 @@ function signin(username, password) {
   }
 }
 
-function logout() {
-  userService.logout();
-  return { type: userConstants.LOGOUT };
+function signout() {
+  userService.signout();
+  return { type: userConstants.SIGNOUT };
 }
 
 function signup(user) {
@@ -71,26 +70,26 @@ function signup(user) {
   }
 }
 
-function getAll() {
-  return (dispatch) => {
-    dispatch(request());
+// function getAll() {
+//   return (dispatch) => {
+//     dispatch(request());
 
-    userService.getAll().then(
-      (users) => dispatch(success(users)),
-      (error) => dispatch(failure(error.toString()))
-    );
-  };
+//     userService.getAll().then(
+//       (users) => dispatch(success(users)),
+//       (error) => dispatch(failure(error.toString()))
+//     );
+//   };
 
-  function request() {
-    return { type: userConstants.GETALL_REQUEST };
-  }
-  function success(users) {
-    return { type: userConstants.GETALL_SUCCESS, users };
-  }
-  function failure(error) {
-    return { type: userConstants.GETALL_FAILURE, error };
-  }
-}
+//   function request() {
+//     return { type: userConstants.GETALL_REQUEST };
+//   }
+//   function success(users) {
+//     return { type: userConstants.GETALL_SUCCESS, users };
+//   }
+//   function failure(error) {
+//     return { type: userConstants.GETALL_FAILURE, error };
+//   }
+// }
 
 // TO ADD
 

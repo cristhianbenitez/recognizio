@@ -19,14 +19,10 @@ Form.Title = ({ children, ...restProps }) => {
     </h2>
   );
 };
-Form.Input = ({ label, value, ...restProps }) => {
+Form.Input = ({ label, isSubmitted, value, ...restProps }) => {
   return (
     <div className="ma3">
-      {!value ? (
-        <TextField label={label} variant="outlined" {...restProps} />
-      ) : (
-        <TextField error id="filled-error-helper-text" />
-      )}
+      <TextField label={label} variant="outlined" {...restProps} />
     </div>
   );
 };

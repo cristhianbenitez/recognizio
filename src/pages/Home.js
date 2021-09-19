@@ -3,15 +3,11 @@ import axios from 'axios';
 import { Navbar, ImageForm, FaceRecognition, Entries } from '../components';
 
 import ParticlesBkg from '../utils/ParticlesBkg';
-import { actions } from '../store';
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { calculateFaceLocation } from '../helpers/';
 
 export const Home = () => {
-  const [name, setName] = useState('');
-  const [entries, setEntries] = useState('');
-  const [id, setId] = useState(1);
+  const { id, name, entries } = JSON.parse(localStorage.user);
+  const [count, setCount] = useState(entries);
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState('');
@@ -27,13 +23,13 @@ export const Home = () => {
       })
       .then(({ data }) => {
         const arrOfFaces = data.outputs[0].data.regions;
-        if (data.description === 'ok') {
+        if (data.status.description === 'Ok') {
           axios
             .put('https://intense-harbor-26195.herokuapp.com/image', {
               id: id
             })
-            .then(({ entries }) => {
-              setEntries({ entries });
+            .then(({ data }) => {
+              setCount(data);
             });
         }
         faceBoxes(calculateFaceLocation(arrOfFaces));
@@ -47,10 +43,15 @@ export const Home = () => {
       <Navbar>
         <Navbar.Logo />
         <Navbar.Container>
-          <Navbar.Item link="/signin">Sign Out</Navbar.Item>
+          <Navbar.Item
+            link="/signin"
+            onClick={() => localStorage.removeItem('user')}
+          >
+            Sign Out
+          </Navbar.Item>
         </Navbar.Container>
       </Navbar>
-      <Entries name={name} entries={entries} />
+      <Entries name={name} entries={count} />
       <ImageForm>
         <ImageForm.Text>
           This Magic Brain will detect faces in your pictures. Give it a try

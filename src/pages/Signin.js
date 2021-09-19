@@ -2,34 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-
 import { Form, Navbar } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
 import { userActions } from '../actions';
-
+import { useHistory } from 'react-router-dom';
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const useActions = bindActionCreators(userActions, dispatch);
+  const { signin, signout } = bindActionCreators(userActions, dispatch);
 
   useEffect(() => {
-    // signout()
+    signout();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleError = () => {
+    setError(true);
     !submitted && !email && !password ? setError(true) : setError(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setSubmitted(true);
     handleError();
     if (email && password) {
-      SignIn(email, password);
+      signin(email, password);
     }
   };
 
@@ -43,10 +43,12 @@ export const SignIn = () => {
           <Navbar.Item link="/signup">Sign Up</Navbar.Item>
         </Navbar.Container>
       </Navbar>
-      <Form onSubmit={handleSubmit}>
+      <Form name="form" onSubmit={handleSubmit}>
         <Form.Title>Sign In</Form.Title>
         {error ? (
-          <Form.Alert onClose={handleError}>Wrong Credentials</Form.Alert>
+          <Form.Alert onClose={() => setError(false)}>
+            Wrong Credentials
+          </Form.Alert>
         ) : null}
         <Form.Input
           label="Email"

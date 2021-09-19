@@ -1,4 +1,3 @@
-import { authHeader } from '../helpers/auth-header';
 import axios from 'axios';
 
 export const userService = {
@@ -10,14 +9,13 @@ export const userService = {
 };
 
 function signin(email, password) {
-  axios
+  return axios
     .post('https://intense-harbor-26195.herokuapp.com/signin', {
       email: email,
       password: password
     })
     .then(handleResponse)
     .then((user) => {
-      // store user to localStorage
       localStorage.setItem('user', JSON.stringify(user));
       return user;
     });
@@ -28,7 +26,7 @@ function signout() {
   localStorage.removeItem('user');
 }
 
-function signup(email, name, password) {
+function signup({ email, name, password }) {
   return axios
     .post('https://intense-harbor-26195.herokuapp.com/signup', {
       name: email,
@@ -38,6 +36,19 @@ function signup(email, name, password) {
     .then(handleResponse);
 }
 
+function handleResponse(response) {
+  const { statusText, data, status } = response;
+  if (statusText !== 'OK') {
+    if (status === 401) {
+      signout();
+      window.location.reload(true);
+    }
+    const error = (data && data.message) || response.statusText;
+    return Promise.reject(error);
+  }
+
+  return data;
+}
 /*  Not ready in the back end yet
 
 function update(user) {
@@ -67,17 +78,3 @@ function _delete(id) {
   );
 }
  */
-
-function handleResponse(response) {
-  const { statusText, data, status } = response;
-  if (statusText !== 'Ok') {
-    console.log(data);
-    if (status === 401) {
-      signout();
-      // eslint-disable-next-line no-restricted-globals
-      location.reload(true);
-    }
-  }
-
-  return data;
-}
