@@ -1,17 +1,17 @@
-import { userConstants } from "../constants";
+import { userConstants } from '../constants';
 
-export const signup = (state ={}, action ){
+export const signup = (state = {}, action) => {
   switch (action.type) {
     case userConstants.SIGNUP_REQUEST:
-      return{
-        issigningup:true
-      }
+      return {
+        issigningup: true
+      };
     case userConstants.SIGNUP_SUCCESS:
-      return{}
+      return {};
     case userConstants.SIGNUP_FAILURE:
-      return{}
-  
+      return {};
+
     default:
-     return state
+      return state;
   }
-}
+};

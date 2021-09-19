@@ -1,4 +1,3 @@
-import config from 'config';
 import { authHeader } from '../helpers/auth-header';
 import axios from 'axios';
 
@@ -6,8 +5,8 @@ export const userService = {
   signin,
   signout,
   signup
-  // update,
-  // delete: _delete
+  // update,                 toadd
+  // delete: _delete         toadd
 };
 
 function signin(email, password) {
@@ -16,14 +15,12 @@ function signin(email, password) {
       email: email,
       password: password
     })
-    .then(({ data }) => {
-      if (data.id) {
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(data));
-        return data;
-      }
-    })
-    .catch((err) => console.log(err));
+    .then(handleResponse)
+    .then((user) => {
+      // store user to localStorage
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
+    });
 }
 
 function signout() {
@@ -32,18 +29,13 @@ function signout() {
 }
 
 function signup(email, name, password) {
-  axios
+  return axios
     .post('https://intense-harbor-26195.herokuapp.com/signup', {
       name: email,
       email: name,
       password: password
     })
-    .then(({ data }) => {
-      if (data.id) {
-        localStorage.setItem('user', JSON.stringify(data));
-        return data;
-      }
-    });
+    .then(handleResponse);
 }
 
 /*  Not ready in the back end yet
@@ -77,19 +69,15 @@ function _delete(id) {
  */
 
 function handleResponse(response) {
-  return response.text().then((text) => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        location.reload(true);
-      }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+  const { statusText, data, status } = response;
+  if (statusText !== 'Ok') {
+    console.log(data);
+    if (status === 401) {
+      signout();
+      // eslint-disable-next-line no-restricted-globals
+      location.reload(true);
     }
+  }
 
-    return data;
-  });
+  return data;
 }

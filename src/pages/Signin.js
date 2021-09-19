@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { bindActionCreators } from 'redux';
 
 import { Form, Navbar } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
+import { userActions } from '../actions';
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(true);
+  const dispatch = useDispatch();
+  const useActions = bindActionCreators(userActions, dispatch);
+
+  useEffect(() => {
+    // signout()
+  }, []);
 
   const handleError = () => {
     !submitted && !email && !password ? setError(true) : setError(false);
   };
 
-  const handleSignIn = () => {
-    axios
-      .post('https://intense-harbor-26195.herokuapp.com/signin', {
-        email: email,
-        password: password
-      })
-      .then(({ data }) => {
-        if (data.id) {
-          console.log(data);
-          localStorage.setItem('user', JSON.stringify(data));
-          return data;
-        }
-      })
-      .catch((err) => console.log(err));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setSubmitted(true);
+    handleError();
+    if (email && password) {
+      SignIn(email, password);
+    }
   };
+
   return (
     <>
       <ParticlesBkg />
@@ -40,7 +43,7 @@ export const SignIn = () => {
           <Navbar.Item link="/signup">Sign Up</Navbar.Item>
         </Navbar.Container>
       </Navbar>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Title>Sign In</Form.Title>
         {error ? (
           <Form.Alert onClose={handleError}>Wrong Credentials</Form.Alert>
@@ -58,7 +61,7 @@ export const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Form.Button onClick={handleSignIn}>Sign In</Form.Button>
+        <Form.Button>Sign In</Form.Button>
         <Link to="/signup" className="no-underline">
           <Form.SmallText>Sign Up</Form.SmallText>
         </Link>

@@ -1,2 +1,2 @@
 export * from './alert.actions';
-export * from './updates.actions';
+export * from './user.actions';

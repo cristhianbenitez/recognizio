@@ -1,6 +1,6 @@
 import { userConstants } from '../constants';
 
-export const userReducer = (state = {}, action) => {
+export const user = (state = {}, action) => {
   switch (action.type) {
     case userConstants.DELETE_REQUEST:
       return {

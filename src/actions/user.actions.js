@@ -1,20 +1,21 @@
 import { userConstants } from '../constants';
-import { userService } from '../../services';
+import { userService } from '../services';
 import { alertActions } from '.';
-import { history } from '../../helpers/history';
+import { history } from '../helpers';
 
 export const userActions = {
   signin,
-  signout,
+  logout,
   signup,
-  detele: _delete
+  getAll
+  // delete: _delete
 };
 
-const signin = (email, password) => {
+function signin(username, password) {
   return (dispatch) => {
-    dispatch(request({ email }));
+    dispatch(request({ username }));
 
-    userService.login(email, password).then(
+    userService.signin(username, password).then(
       (user) => {
         dispatch(success(user));
         history.push('/home');
@@ -30,19 +31,19 @@ const signin = (email, password) => {
     return { type: userConstants.SIGNIN_REQUEST, user };
   }
   function success(user) {
-    return { type: userConstants.SIGNIN_REQUEST, user };
+    return { type: userConstants.SIGNIN_SUCCESS, user };
   }
   function failure(error) {
     return { type: userConstants.SIGNIN_FAILURE, error };
   }
-};
+}
 
-const signout = () => {
+function logout() {
   userService.logout();
-  return { type: userConstants };
-};
+  return { type: userConstants.LOGOUT };
+}
 
-const signup = (user) => {
+function signup(user) {
   return (dispatch) => {
     dispatch(request(user));
 
@@ -58,35 +59,59 @@ const signup = (user) => {
       }
     );
   };
+
   function request(user) {
     return { type: userConstants.SIGNUP_REQUEST, user };
   }
   function success(user) {
-    return { type: userConstants.SIGNUP_REQUEST, user };
+    return { type: userConstants.SIGNUP_SUCCESS, user };
   }
   function failure(error) {
     return { type: userConstants.SIGNUP_FAILURE, error };
   }
-};
+}
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-const _delete = (id) => {
+function getAll() {
   return (dispatch) => {
-    dispatch(request(id));
+    dispatch(request());
 
-    userService.delete(id).then(
-      (user) => dispatch(success(id)),
-      (error) => dispatch(failure(id, error.toString()))
+    userService.getAll().then(
+      (users) => dispatch(success(users)),
+      (error) => dispatch(failure(error.toString()))
     );
   };
 
-  function request(id) {
-    return { type: userConstants.DELETE_REQUEST, id };
+  function request() {
+    return { type: userConstants.GETALL_REQUEST };
   }
-  function success(id) {
-    return { type: userConstants.DELETE_SUCCESS, id };
+  function success(users) {
+    return { type: userConstants.GETALL_SUCCESS, users };
   }
-  function failure(id, error) {
-    return { type: userConstants.DELETE_FAILURE, id, error };
+  function failure(error) {
+    return { type: userConstants.GETALL_FAILURE, error };
   }
-};
+}
+
+// TO ADD
+
+// prefixed function name with underscore because delete is a reserved word in javascript
+// function _delete(id) {
+//   return (dispatch) => {
+//     dispatch(request(id));
+
+//     userService.delete(id).then(
+//       (user) => dispatch(success(id)),
+//       (error) => dispatch(failure(id, error.toString()))
+//     );
+//   };
+
+//   function request(id) {
+//     return { type: userConstants.DELETE_REQUEST, id };
+//   }
+//   function success(id) {
+//     return { type: userConstants.DELETE_SUCCESS, id };
+//   }
+//   function failure(id, error) {
+//     return { type: userConstants.DELETE_FAILURE, id, error };
+//   }
+// }
