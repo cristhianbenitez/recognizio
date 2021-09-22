@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Form, Navbar } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
 import { userActions } from '../actions';
-import { useHistory } from 'react-router-dom';
+
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

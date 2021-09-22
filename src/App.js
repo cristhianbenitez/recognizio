@@ -22,15 +22,13 @@ function App() {
   });
 
   return (
-    <Router history={history}>
-      <div>
-        <Switch>
-          <PrivateRoute exact path="/" component={Home} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <Redirect from="*" to="/" />
-        </Switch>
-      </div>
+    <Router>
+      <Switch>
+        <PrivateRoute exact path="/" component={Home} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
+        <Redirect from="*" to="/" />
+      </Switch>
     </Router>
   );
 }
