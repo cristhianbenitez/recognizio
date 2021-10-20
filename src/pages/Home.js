@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navbar, ImageForm, FaceRecognition, Entries } from '../components';
-
 import ParticlesBkg from '../utils/ParticlesBkg';
 import { calculateFaceLocation } from '../helpers/';
 
-export const Home = () => {
-  const { id, name, entries } = JSON.parse(localStorage.user);
+export const Home = ({ user, onRouteChange }) => {
+  const { id, entries, name } = user;
   const [count, setCount] = useState(entries);
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -44,8 +43,10 @@ export const Home = () => {
         <Navbar.Logo />
         <Navbar.Container>
           <Navbar.Item
-            link="/signin"
-            onClick={() => localStorage.removeItem('user')}
+            onClick={() => {
+              localStorage.removeItem('user');
+              onRouteChange('signin');
+            }}
           >
             Sign Out
           </Navbar.Item>

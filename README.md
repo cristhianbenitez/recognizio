@@ -2,6 +2,12 @@
 
 Facial Recognition Application created with Reactjs
 
+## Test Account :
+
+email: test@gmail.com
+
+password: test
+
 ## Installation
 
 1. Install node.js and npm
@@ -13,10 +19,10 @@ Facial Recognition Application created with Reactjs
    ```sh
    npm install
    ```
-4. Run the app localy 
-  ```sh
-   npm start 
-   ```
+4. Run the app localy
+
+```sh
+ npm start
+```
 
 ---
-##### there's still a bug when logging in you have to refresh the browser it's not a good practica with react but I have some issues with react-router
