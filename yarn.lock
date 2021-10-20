@@ -8249,11 +8249,6 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-pathseg@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/pathseg/-/pathseg-1.2.1.tgz#50b3fc4fc05c64f4a52f8c04156f6f3975b0df3c"
-  integrity sha512-LtvemzPvcGamWBbNWJaIrgfUzpynXfwYrP6SSFVRhNHVcCaq6SVm4kRGJNuIV8qzBKgCN3fEXFZZ16YETFIXoA==
-
 pbkdf2@^3.0.3:
   version "3.1.1"
   resolved "https://registry.npmjs.org/pbkdf2/-/pbkdf2-3.1.1.tgz"
@@ -9452,13 +9447,13 @@ react-transition-group@^4.4.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-tsparticles@^1.34.0:
-  version "1.34.0"
-  resolved "https://registry.yarnpkg.com/react-tsparticles/-/react-tsparticles-1.34.0.tgz#3dbdd98d08951769a3ee02aaeee72ca451c93743"
-  integrity sha512-KG/9H8SIrL0e7S+pYz+cL36lLJzK3IWPLuIaDZdAOQK5321mtLp/tqmu+tnWXgaE1SQorV6Eh8V36Md8UI2E7A==
+react-tsparticles@^1.36.0:
+  version "1.36.0"
+  resolved "https://registry.yarnpkg.com/react-tsparticles/-/react-tsparticles-1.36.0.tgz#c7c8929bee853c358e338b20aaad1c3d8d5eec58"
+  integrity sha512-PbezkZGA1asFtjzTva5raXYrU9zCfAAhS9kr6cLlh0BtPk3dcmZXe6AF7ktP6iTvXk0NxThtU7sCvcOQGvIOiQ==
   dependencies:
     fast-deep-equal "^3.1.3"
-    tsparticles "^1.34.0"
+    tsparticles "^1.36.0"
 
 react@^17.0.2:
   version "17.0.2"
@@ -10961,12 +10956,10 @@ tslib@^2.0.3:
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
-tsparticles@^1.34.0:
-  version "1.34.0"
-  resolved "https://registry.yarnpkg.com/tsparticles/-/tsparticles-1.34.0.tgz#1f87dea56f4abc44ab9286132162103899df99f4"
-  integrity sha512-7EIyI0339EZEzoUggqKBxkUDCvsM/YT89GyrPTSVcrHNd47SZ9bzTZFAWuTbhQrEiyJEL/np61t2BGOhJJK1Mg==
-  optionalDependencies:
-    pathseg "^1.2.1"
+tsparticles@^1.36.0:
+  version "1.36.0"
+  resolved "https://registry.yarnpkg.com/tsparticles/-/tsparticles-1.36.0.tgz#8ee6703fbc84faa2f4efa2b8516f1b0aa7199266"
+  integrity sha512-T3tvGmiQ2Q5rOxedjw4OjIFUOy+cQ7LAtlRsHTju4zRtqyebd97vwvDQ+ax7ufmR0CpzfifY3LKqqnx38oYtEg==
 
 tsutils@^3.17.1:
   version "3.20.0"
