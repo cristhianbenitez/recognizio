@@ -29,14 +29,21 @@ Form.Input = ({ label, isSubmitted, value, ...restProps }) => {
 Form.Button = ({ children, ...restProps }) => {
   return (
     <div>
-      <button className="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib black pointer">
+      <button
+        className="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib black pointer"
+        {...restProps}
+      >
         {children}
       </button>
     </div>
   );
 };
 Form.SmallText = ({ children, error, ...restProps }) => {
-  return <p className="no-underline white mt3 ">{children}</p>;
+  return (
+    <p className="no-underline white mt3 pointer" {...restProps}>
+      {children}
+    </p>
+  );
 };
 Form.Alert = ({ children, ...restProps }) => {
   return (

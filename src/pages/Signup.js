@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import ParticlesBkg from '../utils/ParticlesBkg';
 import { Form, Navbar } from '../components';
-import { useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { userActions } from '../actions';
 
-export const SignUp = () => {
+export const SignUp = ({ loadUser, onRouteChange }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
-  const dispatch = useDispatch();
-  const { signup } = bindActionCreators(userActions, dispatch);
 
   const handleError = () => {
     !submitted && !email && !password ? setError(true) : setError(false);
@@ -20,10 +16,25 @@ export const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
     handleError();
-    if (email && password && name) {
-      signup({ email, password, name });
+    if (email && password) {
+      return axios
+        .post('https://intense-harbor-26195.herokuapp.com/signup', {
+          name: name,
+          email: email,
+          password: password
+        })
+        .then(({ data }) => {
+          if (data.id) {
+            setSubmitted(true);
+            loadUser(data);
+            onRouteChange('home');
+          }
+        })
+        .catch(() => {
+          setError(true);
+          setSubmitted(false);
+        });
     }
   };
 
@@ -33,8 +44,12 @@ export const SignUp = () => {
       <Navbar>
         <Navbar.Logo />
         <Navbar.Container>
-          <Navbar.Item link="/signin">Sign In</Navbar.Item>
-          <Navbar.Item link="/signup">Sign Up</Navbar.Item>
+          <Navbar.Item onClick={() => onRouteChange('signin')}>
+            Sign In
+          </Navbar.Item>
+          <Navbar.Item onClick={() => onRouteChange('signup')}>
+            Sign Up
+          </Navbar.Item>
         </Navbar.Container>
       </Navbar>
       <Form onSubmit={handleSubmit}>
