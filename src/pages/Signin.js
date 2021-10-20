@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Navbar } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
@@ -9,31 +9,10 @@ export const SignIn = ({ loadUser, onRouteChange }) => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    // if (localStorage.user) {
-    //   localStorage.removeItem('user');
-    // }
-  }, []);
-
   const handleError = () => {
     setError(true);
     submitted && !email && !password ? setError(true) : setError(false);
   };
-  // const signIn = (email, password) => {
-  //   return
-  //     .then((res) => {
-  //       if (res.statusText !== 'OK') {
-  //         if (res.status === 401) localStorage.removeItem('user');
-  //         const error = (res.data && res.data.message) || res.statusText;
-  //         return Promise.reject(error);
-  //       }
-  //       return res.data;
-  //     })
-  //     .then((user) => {
-  //       localStorage.setItem('user', JSON.stringify(user));
-  //       return user;
-  //     });
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();

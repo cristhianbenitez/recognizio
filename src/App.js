@@ -32,7 +32,7 @@ const App = () => {
     }));
     localStorage.setItem('user', JSON.stringify(data));
   };
-
+  // listen to route changes
   const onRouteChange = (route) => {
     if (route === 'signout') setState(initialState);
     else if (route === 'home')
@@ -40,6 +40,7 @@ const App = () => {
     setState((prevState) => ({ ...prevState, route: route }));
   };
 
+  // if user is still logged in localStorage redirect it to home and display the user again
   useEffect(() => {
     if (localStorage.user) {
       onRouteChange('home');
@@ -56,6 +57,7 @@ const App = () => {
       }));
     }
   }, []);
+
   return state.route === 'home' ? (
     <Home user={state.user} onRouteChange={onRouteChange} />
   ) : state.route === 'signin' ? (
