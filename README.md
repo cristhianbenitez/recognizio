@@ -2,6 +2,8 @@
 
 Facial Recognition Application created with Reactjs
 
+You can input a image and it will detect the faces in the photo!
+
 ## Test Account
 
 email: test@gmail.com
