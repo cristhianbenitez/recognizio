@@ -2,8 +2,7 @@
 
 Facial Recognition Application created with Reactjs
 
-You can input a image and it will detect the faces in the photo!
-
+Basically this project was creating using a deep learning AI API called [Clarifai](https://docs.clarifai.com/). Specifically, in this project we are able to submit a image and make a API call and get a response of the ubication of the faces in blue boxes.  
 ## Outcome
 
 ![](https://i.ibb.co/Wf5f4z6/screencapture-face-recognition-web-vercel-app-2021-12-19-13-38-38.png)
