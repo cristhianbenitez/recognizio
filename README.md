@@ -1,6 +1,6 @@
-# face-recognition-app
+# Recognizio
 
-Facial Recognition Application created with Reactjs
+Recognizio is a facial recognition single web application created with Reactjs
 
 Basically this project was creating using a deep learning AI API called [Clarifai](https://docs.clarifai.com/). Specifically, in this project we are able to submit a image and make a API call and get a response of the ubication of the faces in blue boxes.  
 ## Outcome
