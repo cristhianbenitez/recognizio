@@ -37,7 +37,6 @@ export const SignIn = ({ loadUser, onRouteChange }) => {
     }
   };
 
-  const jumpHome = () => {};
 
   return (
     <>
