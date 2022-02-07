@@ -37,6 +37,8 @@ export const SignIn = ({ loadUser, onRouteChange }) => {
     }
   };
 
+  const jumpHome = () => {};
+
   return (
     <>
       <ParticlesBkg />
@@ -72,7 +74,10 @@ export const SignIn = ({ loadUser, onRouteChange }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Form.Button>Sign In</Form.Button>
-        <Form.SmallText onClick={() => onRouteChange('signup')}>
+        <Form.Button onClick={() => onRouteChange('home')}>
+          Jump to Home
+        </Form.Button>
+        <Form.SmallText onClick={() => onRouteChange('home')}>
           Sign Up
         </Form.SmallText>
       </Form>

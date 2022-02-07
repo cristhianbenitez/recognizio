@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Navbar, ImageForm, FaceRecognition, Entries } from '../components';
 import ParticlesBkg from '../utils/ParticlesBkg';
 import { calculateFaceLocation } from '../helpers/';
 
+const testImage =
+  'https://static01.nyt.com/images/2020/11/19/us/artificial-intelligence-fake-people-faces-promo-1605818328743/artificial-intelligence-fake-people-faces-promo-1605818328743-videoSixteenByNineJumbo1600-v3.jpg';
+
 export const Home = ({ user, onRouteChange }) => {
   const { id, entries, name } = user;
-  const [count, setCount] = useState(entries);
+  const [count, setCount] = useState(0);
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState('');
-
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
   const faceBoxes = (boxLocation) => {
     setBox(boxLocation);
   };
+  useEffect(() => {
+    if (entries) setCount(entries);
+  }, [entries]);
 
-  const handleSubmit = (e) => {
+  const detectFaces = (inputImage) => {
     axios
       .post('https://intense-harbor-26195.herokuapp.com/imageurl', {
-        input: input
+        input: inputImage
       })
       .then(({ data }) => {
         const arrOfFaces = data.outputs[0].data.regions;
-        if (data.status.description === 'Ok') {
+        if (data.status.description === 'Ok' && user.name) {
           axios
             .put('https://intense-harbor-26195.herokuapp.com/image', {
               id: id
@@ -33,9 +39,16 @@ export const Home = ({ user, onRouteChange }) => {
         }
         faceBoxes(calculateFaceLocation(arrOfFaces));
       });
-
-    setImageUrl(input);
+    setImageUrl(inputImage);
   };
+
+  const generateRandom = () => {
+    detectFaces(testImage);
+    setTimeout(() => {
+      setIsBtnDisabled(false);
+    }, 5000);
+  };
+
   return (
     <>
       <ParticlesBkg />
@@ -64,8 +77,18 @@ export const Home = ({ user, onRouteChange }) => {
             setInput(e.target.value);
           }}
         />
-        <ImageForm.Button onClick={handleSubmit}>Detect</ImageForm.Button>
+        <ImageForm.Button onClick={() => detectFaces(input)}>
+          Detect
+        </ImageForm.Button>
       </ImageForm.Container>
+      {!user.name ? (
+        <div className="w-20 justify-center center mt1 ">
+          <ImageForm.Button onClick={generateRandom} disabled={isBtnDisabled}>
+            Use Test Image
+          </ImageForm.Button>
+        </div>
+      ) : null}
+      ;
       <FaceRecognition imageURL={imageUrl} boxes={box} />
     </>
   );
